@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <style>
+    body {
+      background-image: url('C:/Users/rushd/Downloads/laptop%20pink%20heart%20aura%20wallpaper.jpeg');
+      background-repeat: no-repeat;
+      background-attachment: fixed;  
+      background-size: cover;
+      padding: 20px;
+    }
+
+    .container {
+      position: relative;
+      text-align: center;
+      color: white;
+      max-width: 1000px;
+      margin: 0 auto;
+    }
+
+    .top-left {
+      position: absolute;
+      top: 8px;
+      left: 0;
+      width: 100%;
+    }
+
+    textarea {
+      width: 100%;
+      height: 80px;
+      resize: none;
+    }
+  </style>
+  <title>Questions ♥</title>
+  <link rel="icon" type="image/x-icon" href="C:\Users\rushd\Downloads\_33_.jpeg">
+  <script>
+    // Save and retrieve data from localStorage
+    window.onload = function() {
+      // Retrieve saved answers from localStorage
+      var savedAnswers = JSON.parse(localStorage.getItem("savedAnswers")) || {};
+
+      // Populate the textareas with saved answers
+      Object.keys(savedAnswers).forEach(function(questionId) {
+        var textarea = document.getElementById(questionId);
+        if (textarea) {
+          textarea.value = savedAnswers[questionId];
+        }
+      });
+
+      // Save the answer when the textarea content changes
+      document.querySelectorAll("textarea").forEach(function(textarea) {
+        textarea.addEventListener("input", function() {
+          savedAnswers[textarea.id] = textarea.value;
+          localStorage.setItem("savedAnswers", JSON.stringify(savedAnswers));
+        });
+      });
+
+      // Delete the answer and clear textarea on button click
+      document.querySelectorAll(".delete-btn").forEach(function(deleteBtn) {
+        deleteBtn.addEventListener("click", function(event) {
+          var textareaId = event.target.dataset.textareaId;
+          var textarea = document.getElementById(textareaId);
+          if (textarea) {
+            textarea.value = "";
+            delete savedAnswers[textareaId];
+            localStorage.setItem("savedAnswers", JSON.stringify(savedAnswers));
+          }
+        });
+      });
+    };
+  </script>
+</head>
+<body>
+  <center>
+    <h1 style="color:rgb(255, 0, 128);">QUESTIONS <3 </h1>
+    <h2 style="color:rgb(255, 0, 128);">We find ourselves questioning and complaining as to "Why me?", "what did I do to deserve this?", "am I that bad?" in situations where we can't control things. Being optimistic and wanting to focus on your personal development, replace your regular question with the following ones to witness the change in yourself. </h2>
+  </center>
+  <div class="container">
+    <div class="top-left">
+      <ul style="color: black;">
+        <ul style="font-size: large;">
+          <ul style="text-align: left;">
+            <ul style="padding-left: 0%;">
+              <h3>♥ If you met yourself for the first time, what would be your first impressions?</h3>
+              <textarea id="q1" name="q1"></textarea>
+              <button class="delete-btn" data-textarea-id="q1">Delete</button>
+
+              <h3>♥ Do you feel misunderstood? What misconceptions do people have about you?</h3>
+              <textarea id="q2" name="q2"></textarea>
+              <button class="delete-btn" data-textarea-id="q2">Delete</button>
+
+              <h3>♥ Do you find it easy to forgive yourself? Why or why not?</h3>
+              <textarea id="q3" name="q3"></textarea>
+              <button class="delete-btn" data-textarea-id="q3">Delete</button>
+              <h3>♥ How do you act when you’re angry? Is this similar or different to how the people in your childhood act when angry?</h3>
+              <textarea id="q1" name="q1"></textarea>
+                            <button class="delete-btn" data-textarea-id="q1">Delete</button>
+              <h3>♥ What do you need to forgive yourself for? Write an apology letter to yourself. </h3>
+              <textarea id="q1" name="q1"></textarea>
+                            <button class="delete-btn" data-textarea-id="q1">Delete</button>
+              <h3>♥ Is there a person you can’t seem to forgive in your life? Write them a letter. What do you want to say to them?</h3>
+              <textarea id="q1" name="q1"></textarea>
+                            <button class="delete-btn" data-textarea-id="q1">Delete</button>
+              <h3>♥ Do you allow yourself to be vulnerable?</h3>
+              <textarea id="q1" name="q1"></textarea>
+                            <button class="delete-btn" data-textarea-id="q1">Delete</button>
+              <h3>♥ What family patterns do I fear I’m repeating?</h3>
+              <textarea id="q1" name="q1"></textarea>
+                            <button class="delete-btn" data-textarea-id="q1">Delete</button>
+              <h3>♥ What past version of myself do I hope no one ever sees?</h3>
+              <textarea id="q1" name="q1"></textarea>
+                            <button class="delete-btn" data-textarea-id="q1">Delete</button>
+              <h3>♥ How did you deal with emotions when you were younger? How did your caregivers encourage you to express when upset, angry, or excited? </h3>
+              <textarea id="q1" name="q1"></textarea>
+                            <button class="delete-btn" data-textarea-id="q1">Delete</button>
+              <h3>♥ What was something you were scared of as a child? Are you still afraid now? What is something that you’re afraid of now? Could they be linked?</h3>
+              <textarea id="q1" name="q1"></textarea>
+                            <button class="delete-btn" data-textarea-id="q1">Delete</button>
+              <h3>♥ What do you love about yourself?</h3>
+              <textarea id="q1" name="q1"></textarea>
+                            <button class="delete-btn" data-textarea-id="q1">Delete</button>
+              <h3>♥ How can you soothe your inner child? </h3>
+              <textarea id="q1" name="q1"></textarea>
+                            <button class="delete-btn" data-textarea-id="q1">Delete</button>
+              <h3>♥ What is your perfect day?</h3>
+              <textarea id="q1" name="q1"></textarea>
+                            <button class="delete-btn" data-textarea-id="q1">Delete</button>
+              <h3>♥ When you feel ashamed, how do you react?</h3>
+              <textarea id="q1" name="q1"></textarea>
+                            <button class="delete-btn" data-textarea-id="q1">Delete</button>
+              <h3>♥ Do you struggle with showing yourself compassion? How does showing yourself compassion make you feel?</h3>
+              <textarea id="q1" name="q1"></textarea>
+                            <button class="delete-btn" data-textarea-id="q1">Delete</button>
+              <h3>♥ What are five self-care activities that make you feel safe and secure?</h3>
+              <textarea id="q1" name="q1"></textarea>
+                            <button class="delete-btn" data-textarea-id="q1">Delete</button>
+              <h3>♥ How did you process emotions as a child?</h3>
+              <textarea id="q1" name="q1"></textarea>
+                            <button class="delete-btn" data-textarea-id="q1">Delete</button>
+              <h3>♥ How did you process emotions as a teenager?</h3>
+              <textarea id="q1" name="q1"></textarea>
+                            <button class="delete-btn" data-textarea-id="q1">Delete</button>
+              <h3>♥ How do you process emotions now? Has this changed over time? How?</h3>
+              <textarea id="q1" name="q1"></textarea>
+                            <button class="delete-btn" data-textarea-id="q1">Delete</button>
+              <h3>♥ What is the most hurtful thing anyone has ever done to you?</h3>
+              <textarea id="q1" name="q1"></textarea>
+                            <button class="delete-btn" data-textarea-id="q1">Delete</button>
+              <h3>♥ What is one thing you can do today to release some of the trauma in your body?</h3>
+              <textarea id="q1" name="q1"></textarea>
+                            <button class="delete-btn" data-textarea-id="q1">Delete</button>
+              <h3>♥ What are your “comfort movies” or TV shows?</h3>
+              <textarea id="q1" name="q1"></textarea>
+                            <button class="delete-btn" data-textarea-id="q1">Delete</button>
+              <h3>♥ Do you recognize anything wrong with you or your life?</h3>
+              <textarea id="q1" name="q1"></textarea>
+                            <button class="delete-btn" data-textarea-id="q1">Delete</button>
+              <h3>♥ When are you most judgemental?</h3>
+              <textarea id="q1" name="q1"></textarea>
+                            <button class="delete-btn" data-textarea-id="q1">Delete</button>
+              <h3>♥ What relationship do you think you could have stronger boundaries? What's preventing you from setting those boundaries?</h3>
+              <textarea id="q1" name="q1"></textarea>
+                            <button class="delete-btn" data-textarea-id="q1">Delete</button>
+              <h3>♥ Do you respect other people's boundaries?</h3>
+              <textarea id="q1" name="q1"></textarea>
+                            <button class="delete-btn" data-textarea-id="q1">Delete</button>
+              <h3>♥ What are your core values?</h3>
+              <textarea id="q1" name="q1"></textarea>
+                            <button class="delete-btn" data-textarea-id="q1">Delete</button>
+              <h3>♥ Are you living in alignment with your core values? If no, which values aren't being respected?</h3>
+              <textarea id="q1" name="q1"></textarea>
+                            <button class="delete-btn" data-textarea-id="q1">Delete</button>
+              <h3>♥ Are your core values similar to your parents or caregivers? Are you happy about that? Where else do you think your values came from?</h3>
+              <textarea id="q1" name="q1"></textarea>
+                            <button class="delete-btn" data-textarea-id="q1">Delete</button>
+              <!-- Add more questions here if needed -->
+
+            </ul>
+          </ul>
+        </ul>
+      </ul>
+    </div>
+  </div>
+</body>
+</html>

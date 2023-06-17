@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <style>
+    body {
+        background-image: url('C:/Users/rushd/Downloads/laptop%20pink%20heart%20aura%20wallpaper.jpeg');
+background-repeat: no-repeat;
+background-attachment: fixed;  
+background-size: cover;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+    }
+
+
+    h1 {
+      text-align: center;
+      color: rgb(255, 0, 128);
+      margin-top: 0;
+    }
+
+    form {
+      display: flex;
+      margin-bottom: 10px;
+    }
+
+    input[type="text"] {
+      flex-grow: 1;
+      padding: 10px;
+      border: none;
+      border-radius: 5px;
+      font-size: 16px;
+    }
+
+    button {
+      padding: 10px 20px;
+      background-color: rgb(255, 0, 128);
+      color: #fff;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+
+    ul {
+      list-style: none;
+      padding: 0;
+      width: 100%;
+      max-height: 80%;
+      overflow-y: auto;
+      font-size: x-large;
+    }
+
+    li {
+      display: flex;
+      align-items: center;
+      padding: 10px;
+      border-bottom: 1px solid #ccc;
+      text-decoration: none;
+      font-size: x-large;
+    }
+
+    .heart-icon {
+      color:rgb(255, 0, 128);
+      margin-right: 10px;
+    }
+
+    .completed {
+      text-decoration: line-through;
+      color: #888;
+    }
+
+    .delete-btn {
+      color: rgb(255, 0, 128);
+      background: none;
+      border: none;
+      cursor: pointer;
+      margin-left: auto;
+    }
+  </style>
+  <title>To-Do List ♥ </title>
+  <link rel="icon" type="image/x-icon" href="C:\Users\rushd\Downloads\_33_.jpeg">
+</head>
+<body>
+  <div class="container">
+    <h1>To-Do List <span class="heart-icon">&hearts;</span></h1>
+    <form id="todo-form">
+      <input type="text" id="todo-input" placeholder="Add a new task">
+      <button type="submit">Add</button>
+    </form>
+    <ul id="todo-list"></ul>
+  </div>
+
+  <script>
+    const form = document.getElementById('todo-form');
+    const input = document.getElementById('todo-input');
+    const list = document.getElementById('todo-list');
+
+    // Load saved tasks from local storage
+    const savedTasks = JSON.parse(localStorage.getItem('todoTasks')) || [];
+
+    // Render saved tasks
+    savedTasks.forEach(task => {
+      const li = createTaskElement(task.text, task.completed);
+      list.appendChild(li);
+    });
+
+    form.addEventListener('submit', (e) => {
+      e.preventDefault();
+      const taskText = input.value.trim();
+      if (taskText !== '') {
+        const li = createTaskElement(taskText);
+        list.appendChild(li);
+        savedTasks.push({ text: taskText, completed: false });
+        saveTasks();
+        input.value = '';
+      }
+    });
+
+    function createTaskElement(text, completed = false) {
+      const li = document.createElement('li');
+      li.innerHTML = `
+        <span class="heart-icon">&hearts;</span>
+        <span class="${completed ? 'completed' : ''}">${text}</span>
+        <button class="delete-btn">&times;</button>
+      `;
+      const deleteBtn = li.querySelector('.delete-btn');
+      deleteBtn.addEventListener('click', () => {
+        li.remove();
+        savedTasks.splice(findTaskIndex(text), 1);
+        saveTasks();
+      });
+      li.addEventListener('click', () => {
+        li.classList.toggle('completed');
+        const taskIndex = findTaskIndex(text);
+        savedTasks[taskIndex].completed = !savedTasks[taskIndex].completed;
+        saveTasks();
+      });
+      return li;
+    }
+
+    function findTaskIndex(text) {
+      return savedTasks.findIndex(task => task.text === text);
+    }
+
+    function saveTasks() {
+      localStorage.setItem('todoTasks', JSON.stringify(savedTasks));
+    }
+  </script>
+</body>
+</html>

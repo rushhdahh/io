@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <style>
+    body {
+      background-image: url('C:/Users/rushd/Downloads/laptop%20pink%20heart%20aura%20wallpaper.jpeg');
+      background-repeat: no-repeat;
+      background-attachment: fixed;  
+      background-size: cover;
+    }
+
+    .calendar {
+      width: 100%;
+      height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+    }
+
+    h1 {
+      text-align: center;
+      color: #ff80ab;
+      margin-top: 0;
+    }
+
+    table {
+      border-collapse: collapse;
+      margin-top: 20px;
+    }
+
+    td {
+      padding: 10px;
+      text-align: center;
+      position: relative;
+    }
+
+    .heart-icon {
+      color: #ff80ab;
+    }
+
+    .event-container {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      display: none;
+      background-color: rgba(255, 128, 171, 0.9);
+      color: #fff;
+      z-index: 1;
+      padding: 10px;
+      box-sizing: border-box;
+    }
+
+    .event-container.active {
+      display: inline;
+    }
+
+    .event-container h3 {
+      margin-top: 0;
+    }
+
+    .event-container p {
+      margin-bottom: 0;
+    }
+
+    .event-container button {
+      margin-top: 10px;
+      background-color: #fff;
+      color: #ff80ab;
+      border: none;
+      border-radius: 5px;
+      padding: 5px 10px;
+      cursor: pointer;
+    }
+  </style>
+     <title>Journal Entry ♥</title>
+     <link rel="icon" type="image/x-icon" href="C:\Users\rushd\Downloads\_33_.jpeg">
+</head>
+<body>
+
+  <div class="calendar">
+    <h1 id="month-name"></h1>
+    <table id="calendar-table"></table>
+  </div>
+
+  <div id="event-modal" class="event-container">
+    <h3 id="event-date"></h3>
+    <p id="event-description"></p>
+    <button id="delete-event">Delete Event</button>
+    <button id="edit-event">Edit Event</button>
+  </div>
+
+  <script>
+    // Check if browser supports localStorage
+    if (typeof(Storage) !== "undefined") {
+      const monthNames = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
+      const currentDate = new Date();
+      const currentMonth = currentDate.getMonth();
+      const currentYear = currentDate.getFullYear();
+      const daysInMonth = new Date(currentYear, currentMonth + 1, 0).getDate();
+
+      const monthNameElement = document.getElementById('month-name');
+      const calendarTable = document.getElementById('calendar-table');
+      const eventModal = document.getElementById('event-modal');
+      const eventDateElement = document.getElementById('event-date');
+      const eventDescriptionElement = document.getElementById("event-description");
+      const deleteEventButton = document.getElementById('delete-event');
+      const editEventButton = document.getElementById('edit-event');
+      let selectedDay = null;
+      let eventData = JSON.parse(localStorage.getItem('eventData')) || {};
+
+      // Set month name
+      monthNameElement.textContent = monthNames[currentMonth];
+
+      // Generate calendar days
+      let calendarHTML = '<tr>';
+      for (let i = 1; i <= daysInMonth; i++) {
+        calendarHTML += `<td>${i}</td>`;
+        if (i % 7 === 0 && i !== daysInMonth) {
+          calendarHTML += '</tr><tr>';
+        }
+      }
+      calendarHTML += '</tr>';
+
+      // Set calendar HTML
+      calendarTable.innerHTML = calendarHTML;
+
+      // Function to show event modal
+      function showEventModal(day) {
+        const eventDescription = eventData[day];
+        if (eventDescription) {
+          selectedDay = day;
+          eventDateElement.textContent = `${monthNames[currentMonth]} ${day}`;
+          eventDescriptionElement.textContent = eventDescription;
+          eventModal.classList.add('active');
+        }
+      }
+
+      // Function to hide event modal
+      function hideEventModal() {
+        eventModal.classList.remove('active');
+      }
+
+      // Add event listeners to calendar days
+      const calendarDays = calendarTable.getElementsByTagName('td');
+      for (let i = 0; i < calendarDays.length; i++) {
+        const day = i + 1;
+        const calendarDay = calendarDays[i];
+
+        // Show event modal on mouseenter
+        calendarDay.addEventListener('mouseenter', () => {
+          showEventModal(day);
+        });
+
+        // Hide event modal on mouseleave
+        eventModal.addEventListener('mouseleave', (e) => {
+          if (!eventModal.contains(e.relatedTarget)) {
+            hideEventModal();
+          }
+        });
+
+        // Add or edit event on click
+        calendarDay.addEventListener('click', () => {
+          const eventDescription = eventData[day];
+          if (eventDescription) {
+            // Edit event
+            const updatedEvent = prompt('Edit event:', eventDescription);
+            if (updatedEvent) {
+              eventData[day] = updatedEvent;
+              eventDescriptionElement.textContent = updatedEvent;
+              localStorage.setItem('eventData', JSON.stringify(eventData));
+            }
+          } else {
+            // Add event
+            const newEvent = prompt('Add event:');
+            if (newEvent) {
+              eventData[day] = newEvent;
+              calendarDay.innerHTML += `<br><span class="heart-icon">&hearts;</span>`;
+              localStorage.setItem('eventData', JSON.stringify(eventData));
+            }
+          }
+        });
+      }
+
+      // Delete event
+      deleteEventButton.addEventListener('click', () => {
+        if (selectedDay !== null) {
+          delete eventData[selectedDay];
+          calendarDays[selectedDay - 1].innerHTML = selectedDay;
+          hideEventModal();
+          localStorage.setItem('eventData', JSON.stringify(eventData));
+          selectedDay = null;
+        }
+      });
+
+      // Edit event
+      editEventButton.addEventListener('click', () => {
+        if (selectedDay !== null) {
+          const eventDescription = eventData[selectedDay];
+          if (eventDescription) {
+            const updatedEvent = prompt('Edit event:', eventDescription);
+            if (updatedEvent) {
+              eventData[selectedDay] = updatedEvent;
+              eventDescriptionElement.textContent = updatedEvent;
+              localStorage.setItem('eventData', JSON.stringify(eventData));
+            }
+          }
+        }
+      });
+
+      // Populate saved event data on the calendar
+      Object.entries(eventData).forEach(([day, description]) => {
+        const calendarDay = calendarDays[day - 1];
+        calendarDay.innerHTML += `<br><span class="heart-icon">&hearts;</span>`;
+        calendarDay.dataset.event = description;
+      });
+
+      // Save code button functionality
+      const saveCodeButton = document.createElement('button');
+      saveCodeButton.textContent = '<3';
+      saveCodeButton.addEventListener('click', () => {
+        const htmlCode = document.documentElement.outerHTML;
+        localStorage.setItem('savedCode', htmlCode);
+        alert('Code saved successfully!');
+      });
+      document.body.appendChild(saveCodeButton);
+    } else {
+      console.log('Sorry, your browser does not support Web Storage.');
+    }
+  </script>
+</body>
+</html>
